@@ -47,6 +47,7 @@ Custom site, bookings, ticketing, payments and enquiries for The Lucky Mat (mobi
 - `DATABASE_URL` (Neon via Vercel Storage)
 - `STRIPE_SECRET_KEY` (test key until the real-payment test)
 - `STRIPE_WEBHOOK_SECRET` (signing secret of the webhook endpoint)
+- `ADMIN_PASSWORD` (password for /admin, username `lucky`; gate is in `src/proxy.ts`)
 
 ## Commands
 

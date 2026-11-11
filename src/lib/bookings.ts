@@ -92,3 +92,29 @@ export async function getBooking(id: string) {
   }[];
   return rows[0] ?? null;
 }
+
+export type RosterRow = {
+  id: string;
+  class_date: string;
+  spots: number;
+  amount_cents: number;
+  status: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  mate_name: string | null;
+  mate_email: string | null;
+  paid_at: string | null;
+};
+
+// Paid (and credited) bookings from today on, oldest class first.
+export async function roster(): Promise<RosterRow[]> {
+  await ready();
+  return (await sql()`
+    SELECT id, class_date::text AS class_date, spots, amount_cents, status, name, email, phone,
+           mate_name, mate_email, to_char(paid_at AT TIME ZONE 'Australia/Melbourne', 'DD Mon HH24:MI') AS paid_at
+    FROM park_bookings
+    WHERE status IN ('paid', 'credited')
+      AND class_date >= (now() AT TIME ZONE 'Australia/Melbourne')::date
+    ORDER BY class_date, paid_at`) as RosterRow[];
+}

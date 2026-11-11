@@ -1,0 +1,9 @@
+.day{margin-top:40px;border-top:2px solid var(--red);padding-top:16px}
+.dayHead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.dayHead h2{font-size:clamp(26px,3vw,36px)}
+.dayHead span{color:var(--red)}
+.scroll{overflow-x:auto;margin-top:12px}
+.table{width:100%;border-collapse:collapse;font-size:15px;min-width:640px}
+.table th{font-family:var(--f-sport);font-stretch:125%;font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;text-align:left;padding:8px 10px;background:var(--linen)}
+.table td{padding:10px;border-bottom:1px solid var(--linen)}
+.table a{color:var(--red)}
