@@ -22,3 +22,19 @@ export const parkDates: ParkDate[] = [
 
 export const upcomingParkDates = (now = new Date()) =>
   parkDates.filter((d) => new Date(`${d.iso}T23:59:59+11:00`) >= now);
+
+// Classes start at 8am Melbourne time (AEDT, UTC+11, through summer).
+export const classStart = (iso: string) => new Date(`${iso}T08:00:00+11:00`);
+
+export const bookableClass = (iso: string, now = new Date()) =>
+  parkDates.find((d) => d.iso === iso && d.kind === "class" && classStart(d.iso) > now) ?? null;
+
+export const priceCents = (spots: 1 | 2) => (spots === 2 ? PARK_PRICE.two : PARK_PRICE.one) * 100;
+
+export const longDate = (iso: string) =>
+  new Date(`${iso}T12:00:00+11:00`).toLocaleDateString("en-AU", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    timeZone: "Australia/Melbourne",
+  });

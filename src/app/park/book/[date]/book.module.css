@@ -1,0 +1,13 @@
+.form{display:grid;gap:14px;margin-top:32px}
+.options{border:0;padding:0;margin:0 0 12px;display:grid;gap:10px}
+.options legend{margin-bottom:10px}
+.opt,.on{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:56px;padding:0 16px;border:2px solid var(--red);background:var(--cream);color:var(--chocolate);font:inherit;cursor:pointer;text-align:left}
+.on{background:var(--ice);color:var(--red)}
+.opt:disabled{opacity:.5;cursor:not-allowed}
+.field{display:grid;gap:6px;font-size:15px}
+.field input{font:inherit;font-size:17px;min-height:48px;padding:0 12px;border:2px solid var(--chocolate);background:var(--cream);color:var(--chocolate);border-radius:0}
+.field input:focus{outline:3px solid var(--ice);outline-offset:0;border-color:var(--red)}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:15px;margin:8px 0}
+.check input{width:22px;height:22px;accent-color:var(--red);flex:none;margin-top:2px}
+.error{background:var(--butter);border:2px solid var(--red);color:var(--red);padding:10px 14px;margin:0}
+.small{font-size:14px;margin:0}

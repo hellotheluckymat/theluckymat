@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { spotsLeftMany } from "@/lib/bookings";
 import { PARK_CAPACITY, PARK_PRICE, upcomingParkDates } from "@/lib/park";
 import s from "./park.module.css";
 
@@ -7,11 +9,24 @@ export const metadata: Metadata = {
   description: `Sunday mat Pilates in the park, 8am from 6 Dec. $${PARK_PRICE.one} a class or $${PARK_PRICE.two} for two.`,
 };
 
-// Rebuild hourly so past dates drop off the list.
-export const revalidate = 3600;
+// Fresh every minute so spots left stay close to live.
+export const revalidate = 60;
 
-export default function Park() {
+const bookingsOn = () => Boolean(process.env.DATABASE_URL && process.env.STRIPE_SECRET_KEY);
+
+export default async function Park() {
   const dates = upcomingParkDates();
+  const open = bookingsOn();
+  let left: Record<string, number> = {};
+  if (open) {
+    try {
+      left = await spotsLeftMany(dates.filter((d) => d.kind === "class").map((d) => d.iso));
+    } catch (e) {
+      console.error("spots lookup failed", e);
+    }
+  }
+  const firstClass = dates.find((d) => d.kind === "class");
+
   return (
     <>
       <section className={s.poster}>
@@ -31,24 +46,50 @@ export default function Park() {
         <div>
           <p className="label">Coming up</p>
           <ul className={s.dates}>
-            {dates.map((d, i) => (
-              <li
-                key={d.iso}
-                className={`${s.date} ${d.kind === "event" ? s.event : ""} ${i === 0 && d.kind === "class" ? s.first : ""}`}
-              >
-                <span>
-                  <span className="mono">{d.label}</span>
-                  {d.note && <span className={`italic ${s.note}`}>{d.note}</span>}
-                </span>
-                <span className="mono" style={{ color: "var(--red)" }}>
-                  {d.kind === "event" ? "Tickets soon" : `$${PARK_PRICE.one}`}
-                </span>
-              </li>
-            ))}
+            {dates.map((d, i) => {
+              const isClass = d.kind === "class";
+              const n = left[d.iso];
+              const full = isClass && n === 0;
+              const cls = `${s.date} ${!isClass ? s.event : ""} ${i === 0 && isClass ? s.first : ""}`;
+              const body = (
+                <>
+                  <span>
+                    <span className="mono">{d.label}</span>
+                    {d.note && <span className={`italic ${s.note}`}>{d.note}</span>}
+                  </span>
+                  <span className={`mono ${s.right}`}>
+                    {!isClass
+                      ? "Tickets soon"
+                      : full
+                        ? "Full"
+                        : n !== undefined && n <= 8
+                          ? `${n} left · $${PARK_PRICE.one}`
+                          : `$${PARK_PRICE.one}`}
+                  </span>
+                </>
+              );
+              return (
+                <li key={d.iso}>
+                  {open && isClass && !full ? (
+                    <Link href={`/park/book/${d.iso}`} className={`${cls} ${s.link}`}>
+                      {body}
+                    </Link>
+                  ) : (
+                    <div className={cls}>{body}</div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
           <p className={s.break}>No classes from 20 Dec to 3 Jan. We&apos;re back Sunday 10 Jan.</p>
           <p style={{ marginTop: 28 }}>
-            <a className="btn" aria-disabled="true" href="#">Booking opens Sun 15 Nov</a>
+            {open && firstClass ? (
+              <Link className="btn" href={`/park/book/${firstClass.iso}`}>
+                Book {firstClass.label.split(" · ")[0]}
+              </Link>
+            ) : (
+              <a className="btn" aria-disabled="true" href="#">Booking opens Sun 15 Nov</a>
+            )}
           </p>
         </div>
 

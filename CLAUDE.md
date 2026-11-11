@@ -34,6 +34,20 @@ Custom site, bookings, ticketing, payments and enquiries for The Lucky Mat (mobi
 | Mon 7 Dec | Vouchers, credits, teacher PDF downloads |
 | Sat 2 Jan | Sundays back from 10 Jan, waitlist |
 
+## Park bookings (slice 1)
+
+- Flow: `/park` → `/park/book/[date]` form → server action holds the mats (pending row) → Stripe Checkout (30 min expiry) → `/park/booked` (also checks Stripe directly) or `/park/cancelled` (frees the hold).
+- `src/lib/bookings.ts`: capacity is paid rows plus pending rows under 35 min old, capped at 20, with a per-date advisory lock so two buyers can't take the last mat.
+- Schema is created on first query by `ready()` in `src/lib/db.ts` (no migration tool yet).
+- Webhook: `POST /api/stripe/webhook` for `checkout.session.completed`, `.expired`, `.async_payment_succeeded`, `.async_payment_failed`.
+- Booking links only show when `DATABASE_URL` and `STRIPE_SECRET_KEY` are both set.
+
+## Environment variables (set in Vercel, never commit)
+
+- `DATABASE_URL` (Neon via Vercel Storage)
+- `STRIPE_SECRET_KEY` (test key until the real-payment test)
+- `STRIPE_WEBHOOK_SECRET` (signing secret of the webhook endpoint)
+
 ## Commands
 
 - `npm run dev`, `npm run build`, `npm run lint`. Run build and lint before every push.
