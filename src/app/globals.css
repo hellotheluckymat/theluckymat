@@ -1,0 +1,51 @@
+/* The Lucky Mat brand tokens. Source: brand/system/lucky-brand.css. Never hard-code hex outside :root. */
+@font-face{font-family:'DM Serif Display';font-weight:400;src:url('/fonts/dm-serif-display-latin-400-normal.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Instrument Serif';font-weight:400;src:url('/fonts/instrument-serif-latin-400-normal.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;src:url('/fonts/instrument-serif-latin-400-italic.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Archivo';font-weight:100 900;font-stretch:62% 125%;src:url('/fonts/archivo-variable-wdth-wght.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Archivo';font-style:italic;font-weight:400;src:url('/fonts/archivo-latin-400-italic.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'DM Mono';font-weight:400;src:url('/fonts/dm-mono-latin-400-normal.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'DM Mono';font-weight:500;src:url('/fonts/dm-mono-latin-500-normal.woff2') format('woff2');font-display:swap}
+
+:root{
+  --red:#A21F2B;--cream:#F4EFE4;--ice:#C8DFF2;--dusty-blue:#6488AE;--butter:#EAD98C;
+  --olive:#6B6E2A;--pear:#CFCC7C;--chocolate:#3B2116;--linen:#E8DFCF;--ice-mist:#E6F0F8;
+  --f-display:'DM Serif Display',serif;--f-italic:'Instrument Serif',serif;
+  --f-sport:'Archivo',sans-serif;--f-mono:'DM Mono',monospace;
+  --gutter:clamp(16px,4vw,48px);--max:1180px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--chocolate)}
+body{font-family:var(--f-sport);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+
+/* type */
+.display{font-family:var(--f-display);font-weight:400;text-transform:uppercase;color:var(--red);line-height:.95;margin:0;letter-spacing:-.01em}
+.sport{font-family:var(--f-sport);font-stretch:62.5%;font-weight:900;text-transform:uppercase;color:var(--red);line-height:.9;margin:0}
+.label{font-family:var(--f-sport);font-stretch:125%;font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:11px;margin:0}
+.italic{font-family:var(--f-italic);font-style:italic;font-weight:400}
+.mono{font-family:var(--f-mono)}
+
+/* buttons: square corners, no shadows */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-family:var(--f-sport);font-stretch:125%;font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:2px solid var(--red);background:var(--red);color:var(--cream);cursor:pointer}
+.btn:hover{background:var(--chocolate);border-color:var(--chocolate)}
+.btn.ghost{background:var(--ice);color:var(--red)}
+.btn.ghost:hover{background:var(--cream)}
+.btn[aria-disabled=true]{opacity:.55;pointer-events:none}
+
+/* header */
+.site-head{background:var(--cream);border-bottom:2px solid var(--red);position:sticky;top:0;z-index:10}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.site-head nav{display:flex;align-items:center;gap:18px}
+.site-head nav a.navlink{font-family:var(--f-sport);font-stretch:125%;font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--chocolate)}
+.site-head nav a.navlink:hover{color:var(--red)}
+@media (max-width:760px){.site-head nav a.navlink{display:none}}
+
+/* footer */
+.site-foot{background:var(--red);color:var(--cream);margin-top:80px;padding:48px 0}
+.site-foot .wrap{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:flex-end}
+.site-foot a{color:var(--cream)}

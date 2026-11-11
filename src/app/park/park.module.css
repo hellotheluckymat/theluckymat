@@ -1,0 +1,24 @@
+.poster{background:var(--butter);border-bottom:2px solid var(--red);position:relative}
+.poster :global(.wrap){padding-top:48px;padding-bottom:40px}
+.poster h1{font-family:var(--f-sport);font-weight:900;font-stretch:100%;text-transform:lowercase;color:var(--chocolate);font-size:clamp(56px,10vw,128px);line-height:.88;margin:16px 0 8px;letter-spacing:-.02em}
+.poster .sub{font-size:clamp(22px,2.6vw,30px);margin:0}
+.sticker{position:absolute;top:32px;right:var(--gutter);background:var(--ice);color:var(--red);border:2px solid var(--red);padding:14px 16px;text-align:center;transform:rotate(4deg)}
+.sticker strong{display:block;font-family:var(--f-sport);font-stretch:62.5%;font-weight:900;font-size:44px;line-height:1}
+.pearStrip{height:14px;background:var(--pear);border-bottom:2px solid var(--red)}
+
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;padding-top:48px}
+@media (max-width:860px){.grid{grid-template-columns:1fr}.sticker{position:static;display:inline-block;margin-top:20px}}
+
+.dates{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:10px}
+.date{display:flex;justify-content:space-between;align-items:center;gap:16px;border:2px solid var(--red);padding:14px 16px;background:var(--cream)}
+.date.first{background:var(--ice-mist)}
+.date.event{background:var(--butter)}
+.date .note{display:block;font-size:14px;margin-top:2px}
+.break{margin:14px 0 0;font-size:15px}
+
+.side{border-top:2px solid var(--red);padding-top:16px}
+.side h2{font-size:clamp(26px,2.6vw,34px);margin:8px 0 12px}
+.side ul{margin:8px 0 0;padding-left:18px}
+.side li{margin:6px 0}
+.priceRow{display:flex;gap:10px;margin:16px 0}
+.priceRow span{border:2px solid var(--red);padding:8px 12px;font-family:var(--f-mono);color:var(--red)}
